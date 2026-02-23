@@ -164,12 +164,12 @@ TextureImporter:
       name: TX Plant_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 104
-        width: 24
-        height: 21
+        x: 5
+        y: 105
+        width: 22
+        height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -186,12 +186,12 @@ TextureImporter:
       name: TX Plant_1
       rect:
         serializedVersion: 2
-        x: 31
-        y: 100
-        width: 29
-        height: 27
+        x: 32
+        y: 101
+        width: 27
+        height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -208,12 +208,12 @@ TextureImporter:
       name: TX Plant_2
       rect:
         serializedVersion: 2
-        x: 65
-        y: 94
-        width: 40
-        height: 34
+        x: 66
+        y: 95
+        width: 38
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -230,12 +230,12 @@ TextureImporter:
       name: TX Plant_3
       rect:
         serializedVersion: 2
-        x: 6
-        y: 46
-        width: 41
-        height: 47
+        x: 7
+        y: 47
+        width: 39
+        height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -252,12 +252,12 @@ TextureImporter:
       name: TX Plant_4
       rect:
         serializedVersion: 2
-        x: 61
-        y: 49
-        width: 49
-        height: 44
+        x: 62
+        y: 50
+        width: 47
+        height: 42
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -274,12 +274,12 @@ TextureImporter:
       name: TX Plant_5
       rect:
         serializedVersion: 2
-        x: 3
-        y: 34
-        width: 19
-        height: 11
+        x: 4
+        y: 35
+        width: 17
+        height: 9
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -296,12 +296,12 @@ TextureImporter:
       name: TX Plant_6
       rect:
         serializedVersion: 2
-        x: 36
-        y: 33
-        width: 18
-        height: 12
+        x: 37
+        y: 34
+        width: 16
+        height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -318,12 +318,12 @@ TextureImporter:
       name: TX Plant_7
       rect:
         serializedVersion: 2
-        x: 68
-        y: 33
-        width: 17
-        height: 12
+        x: 69
+        y: 34
+        width: 15
+        height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -340,12 +340,12 @@ TextureImporter:
       name: TX Plant_8
       rect:
         serializedVersion: 2
-        x: 97
-        y: 32
-        width: 17
-        height: 13
+        x: 98
+        y: 33
+        width: 15
+        height: 11
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -362,12 +362,12 @@ TextureImporter:
       name: TX Plant_9
       rect:
         serializedVersion: 2
-        x: 3
-        y: 18
-        width: 14
-        height: 10
+        x: 4
+        y: 19
+        width: 12
+        height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -384,12 +384,12 @@ TextureImporter:
       name: TX Plant_10
       rect:
         serializedVersion: 2
-        x: 35
-        y: 17
-        width: 14
-        height: 12
+        x: 36
+        y: 18
+        width: 12
+        height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -406,12 +406,12 @@ TextureImporter:
       name: TX Plant_11
       rect:
         serializedVersion: 2
-        x: 65
-        y: 16
-        width: 16
-        height: 12
+        x: 66
+        y: 17
+        width: 14
+        height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -428,12 +428,12 @@ TextureImporter:
       name: TX Plant_12
       rect:
         serializedVersion: 2
-        x: 100
-        y: 17
-        width: 14
-        height: 11
+        x: 101
+        y: 18
+        width: 12
+        height: 9
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -450,12 +450,12 @@ TextureImporter:
       name: TX Plant_13
       rect:
         serializedVersion: 2
-        x: 3
-        y: 4
-        width: 14
-        height: 12
+        x: 4
+        y: 5
+        width: 12
+        height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -472,12 +472,12 @@ TextureImporter:
       name: TX Plant_14
       rect:
         serializedVersion: 2
-        x: 37
-        y: 4
-        width: 15
-        height: 11
+        x: 38
+        y: 5
+        width: 13
+        height: 9
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -494,12 +494,12 @@ TextureImporter:
       name: TX Plant_15
       rect:
         serializedVersion: 2
-        x: 68
-        y: 4
-        width: 15
-        height: 11
+        x: 69
+        y: 5
+        width: 13
+        height: 9
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -516,20 +516,20 @@ TextureImporter:
       name: TX Plant_16
       rect:
         serializedVersion: 2
-        x: 98
-        y: 5
-        width: 16
-        height: 9
+        x: 99
+        y: 6
+        width: 14
+        height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 7275e010bcad6b6f0800000000000000
-      internalID: -669106929187006681
+      spriteID: 5b12b1d7e70fcb541bfa27bbaa6bc86a
+      internalID: -775160928
       vertices: []
       indices: 
       edges: []
@@ -538,7 +538,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f4c88591ab7cf1a438e9e9e3e7a5907e
     internalID: 0
     vertices: []
     indices: 
@@ -546,7 +546,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       TX Plant_0: 7393824619407222304
       TX Plant_1: -4181601160242843456
@@ -556,7 +558,7 @@ TextureImporter:
       TX Plant_13: -813630121160539150
       TX Plant_14: 3084262300659187285
       TX Plant_15: 4887785052923593483
-      TX Plant_16: -669106929187006681
+      TX Plant_16: -775160928
       TX Plant_2: 6212027134239493093
       TX Plant_3: 8387603877276295833
       TX Plant_4: 8229732441688533532
