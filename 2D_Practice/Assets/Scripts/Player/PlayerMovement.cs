@@ -1,68 +1,166 @@
-
-
-
 using UnityEngine;
-using UnityEngine.InputSystem; //Новая система New Input System
+using UnityEngine.InputSystem; // New Input System (InputValue приходит из PlayerInput)
 
-// Движение игрока в 2D (вид сверху) через New Input System + PlayerInput (Send Messages)
+// Скрипт движения игрока + поддержка 2 источников ввода:
+// 1) Keyboard (New Input System через PlayerInput -> OnMove)
+// 2) Joystick Pack (Fixed/Floating/Dynamic Joystick -> joystick.Horizontal / joystick.Vertical)
+//
+// Цель: можно выбрать режим управления:
+// - Keyboard  : только клавиатура/геймпад из InputActions
+// - Joystick  : только экранный джойстик
+// - Auto      : если джойстик отклонён — используем его, иначе клавиатуру
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    // Какой источник управления использовать
+    public enum ControlMode
+    {
+        Keyboard,  // только New Input System (WASD/стик геймпада и т.д.)
+        Joystick,  // только экранный джойстик (Joystick Pack)
+        Auto       // автоматически: джойстик имеет приоритет, если его тронули
+    }
+
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 5f; // скорость (юнитов в секунду)
+    [SerializeField] private float moveSpeed = 5f;           // скорость движения (настраивается в инспекторе)
+    [SerializeField] private ControlMode controlMode = ControlMode.Auto; // режим управления (можно менять в инспекторе)
 
-    [Header("Animation")]
-    [SerializeField] private Animator animator; // перетащи сюда Animator (обычно на дочернем PlayerSprite)
+    [Header("References")]
+    [SerializeField] private Rigidbody2D rb;                 // Rigidbody2D игрока  найдём сами если нет
+    [SerializeField] private Animator animator;              // Animator (обычно на дочернем объекте Player_0)
 
-    private Rigidbody2D rb;
-    private Vector2 moveInput; // сюда приходит ввод (x,y)
+    // Joystick Pack:
+    // В инспекторе нужно перетащить (FixedJoystick / FloatingJoystick / DynamicJoystick).
+    // Важно: тип поля "Joystick" — это базовый класс из Joystick Pack.
+    [Header("Joystick Pack (optional)")]
+    [SerializeField] private Joystick joystick;
 
-    // запоминаем последнее направление, чтобы в Idle персонаж "смотрел" туда же
+    // ВНУТРЕННЕЕ СОСТОЯНИЕ СКРИПТА
+    
+
+    // Ввод с клавиатуры / геймпада из New Input System (приходит в OnMove)
+    private Vector2 inputKeyboard;
+
+    // Последнее НЕнулевое направление движения.
+    // Нужно, чтобы в Idle персонаж "смотрел" в последнюю сторону, а не сбрасывался на (0,0).
     private Vector2 lastMoveDir = Vector2.down;
+
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        // 1) Забираем Rigidbody2D, если не назначен вручную
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
 
-        // Для топ-даун движения обычно гравитация не нужна
+        // 2) Для top-down обычно гравитация не нужна
         rb.gravityScale = 0f;
 
-        // если забыли назначить animator в инспекторе — попробуем найти на детях
+        // 3) Чтобы физика не крутила игрока при столкновениях со стенами
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // 4) Забираем Animator, если не назначен вручную Он на Player_0 чаще всего
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
     }
 
-    // Этот метод будет автоматически вызываться PlayerInput'ом,
-    // потому что в PlayerInput стоит Behavior = Send Messages
-    // и Action называется "Move" => метод должен называться OnMove
+    
+    // NEW INPUT SYSTEM: PlayerInput вызывает OnMove(...)
+       // Чтобы это работало:
+    // - На игроке должен быть компонент PlayerInput
+    // - Behavior: Send Messages
+    // - Action "Move" должна быть в InputActions
+    // - Название callback должно совпадать: OnMove
     public void OnMove(InputValue value)
     {
-        // Считываем Vector2 из действия Move
-        moveInput = value.Get<Vector2>();
+        // Считываем Vector2: (x,y)
+        // x: влево(-1) / вправо(+1)
+        // y: вниз(-1) / вверх(+1)
+        inputKeyboard = value.Get<Vector2>();
 
-        // Нормализуем, чтобы по диагонали не было быстрее
-        if (moveInput.sqrMagnitude > 1f)
-            moveInput.Normalize();
-        // если есть ввод — запоминаем направление
-        if (moveInput.sqrMagnitude > 0.001f)
-            lastMoveDir = moveInput;
-
-        UpdateAnimator();
-
+        // Нормализация нужна, чтобы по диагонали не было быстрее:
+        // (1,1) по длине больше чем (1,0), поэтому скорость была бы выше.
+        if (inputKeyboard.sqrMagnitude > 1f)
+            inputKeyboard.Normalize();
     }
 
     private void FixedUpdate()
     {
-        // Двигаем через физику (так стабильнее)
-        rb.linearVelocity = moveInput * moveSpeed;
+        // В физике (FixedUpdate) мы двигаем Rigidbody2D
+        // Здесь выбираем, какой ввод использовать: клавиатура/джойстик/авто
+        Vector2 move = GetMoveInput();
+
+        // Движение:
+        // Линейная скорость = направление * скорость
+        rb.linearVelocity = move * moveSpeed;
+
+        // Обновляем параметры анимации (направление и скорость)
+        UpdateAnimator(move);
     }
-    private void UpdateAnimator()
+
+    
+    // ВЫБОР ИСТОЧНИКА УПРАВЛЕНИЯ
+   
+    private Vector2 GetMoveInput()
     {
+        // 1) Получаем ввод с джойстика (если он назначен)
+        Vector2 joy = Vector2.zero;
+
+        if (joystick != null)
+        {
+            // Joystick Pack даёт значения примерно в диапазоне [-1..1]
+            joy = new Vector2(joystick.Horizontal, joystick.Vertical);
+
+            // Нормализуем диагональ (на всякий)
+            if (joy.sqrMagnitude > 1f)
+                joy.Normalize();
+        }
+
+        // 2) Выбираем режим
+        switch (controlMode)
+        {
+            case ControlMode.Keyboard:
+                // Только клавиатура/геймпад из New Input System
+                return inputKeyboard;
+
+            case ControlMode.Joystick:
+                // Только экранный джойстик
+                return joy;
+
+            case ControlMode.Auto:
+            default:
+                // Авто: если джойстик реально отклонён — используем его,
+                // иначе используем клавиатуру.
+                // Порог 0.01f — чтобы игнорировать мелкий шум/дрожание джойстика.
+                return (joy.sqrMagnitude > 0.01f) ? joy : inputKeyboard;
+        }
+    }
+
+    
+    // АНИМАЦИЯ (Blend Tree параметры)
+   
+    // Предполагается, что в Animator есть float параметры:
+    // "Horizontal", "Vertical", "Speed"
+    //
+    // Blend Tree:
+    // - 2D Simple Directional
+    // - X = Horizontal, Y = Vertical
+    // - RunRight (1,0), RunLeft (-1,0), RunUp (0,1), RunDown (0,-1)
+    private void UpdateAnimator(Vector2 move)
+    {
+        // Если Animator не найден — просто выходим (движение будет работать без анимаций)
         if (animator == null) return;
 
-        // В Blend Tree обычно подают направление (Horizontal/Vertical)
-        // а Speed используют для перехода Idle <-> Movement
+        // Если игрок движется — обновляем lastMoveDir
+        if (move.sqrMagnitude > 0.001f)
+            lastMoveDir = move;
+
+        // Направление для Blend Tree берём из lastMoveDir,
+        // чтобы когда move = (0,0) (стоим), персонаж не "терял" ориентацию.
         animator.SetFloat("Horizontal", lastMoveDir.x);
         animator.SetFloat("Vertical", lastMoveDir.y);
-        animator.SetFloat("Speed", moveInput.sqrMagnitude); // 0 стоим, >0 идём
+
+        // Speed используем для перехода Idle <-> Movement
+        // sqrMagnitude быстрее чем magnitude и нам хватает для сравнения/анимаций.
+        animator.SetFloat("Speed", move.sqrMagnitude);
     }
+
+ 
 }
