@@ -33,9 +33,11 @@ public class PlayerMovement : MonoBehaviour
     // Важно: тип поля "Joystick" — это базовый класс из Joystick Pack.
     [Header("Joystick Pack (optional)")]
     [SerializeField] private Joystick joystick;
+    [SerializeField, Range(0f, 1f)] private float joystickDeadZone = 0.2f; // убирает дрожь у центра
+    [SerializeField] private bool joystickDigital = true; // true = всегда полный бег (как клавиши)
 
     // ВНУТРЕННЕЕ СОСТОЯНИЕ СКРИПТА
-    
+
 
     // Ввод с клавиатуры / геймпада из New Input System (приходит в OnMove)
     private Vector2 inputKeyboard;
@@ -105,12 +107,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (joystick != null)
         {
-            // Joystick Pack даёт значения примерно в диапазоне [-1..1]
             joy = new Vector2(joystick.Horizontal, joystick.Vertical);
 
-            // Нормализуем диагональ (на всякий)
-            if (joy.sqrMagnitude > 1f)
-                joy.Normalize();
+            // 1) DeadZone — гасим мелкий шум возле нуля
+            if (joy.magnitude < joystickDeadZone)
+            {
+                joy = Vector2.zero;
+            }
+            else
+            {
+                // 2) Digital режим — делаем как WASD: длина всегда 1
+                // Нормализуем диагональ (на всякий)
+                if (joystickDigital)
+                    joy = joy.normalized;
+                else if (joy.sqrMagnitude > 1f)
+                    joy.Normalize();
+            }
+
+       
         }
 
         // 2) Выбираем режим
@@ -129,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
                 // Авто: если джойстик реально отклонён — используем его,
                 // иначе используем клавиатуру.
                 // Порог 0.01f — чтобы игнорировать мелкий шум/дрожание джойстика.
-                return (joy.sqrMagnitude > 0.01f) ? joy : inputKeyboard;
+                return (joy != Vector2.zero) ? joy : inputKeyboard;
         }
     }
 
@@ -158,9 +172,16 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Vertical", lastMoveDir.y);
 
         // Speed используем для перехода Idle <-> Movement
-        // sqrMagnitude быстрее чем magnitude и нам хватает для сравнения/анимаций.
-        animator.SetFloat("Speed", move.sqrMagnitude);
+       
+        float speedParam = (move.sqrMagnitude > 0.001f) ? 1f : 0f;
+        animator.SetFloat("Speed", speedParam);
+    }
+    public void OnInteract(InputValue value)
+    {
+        if (!value.isPressed) return;
+
+        if (animator != null)
+            animator.SetTrigger("Interact");
     }
 
- 
 }

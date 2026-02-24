@@ -14517,6 +14517,8 @@ MonoBehaviour:
   rb: {fileID: 499791552}
   animator: {fileID: 1626185106}
   joystick: {fileID: 369491924}
+  joystickDeadZone: 0.2
+  joystickDigital: 1
 --- !u!50 &499791552
 Rigidbody2D:
   serializedVersion: 5
@@ -104766,7 +104768,7 @@ Animator:
   m_GameObject: {fileID: 1626185103}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e5412c40d2f5c0f4da49d104f8f62b35, type: 2}
+  m_Controller: {fileID: 9100000, guid: 369ae5ee4415a174291625838709c4bf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -104884,7 +104886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: deadZone
-      value: 0.1
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 2929252285020697096, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_SizeDelta.x
