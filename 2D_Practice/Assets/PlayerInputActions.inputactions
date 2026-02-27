@@ -16,7 +16,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "New action1",
+                    "name": "Sprint",
                     "type": "Button",
                     "id": "2a4b9b53-cff3-4c66-ab22-32c5bd157bb4",
                     "expectedControlType": "",
@@ -148,11 +148,11 @@
                 {
                     "name": "",
                     "id": "71973621-fb0d-4d8d-a14a-bc95e71fa0c4",
-                    "path": "",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action1",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

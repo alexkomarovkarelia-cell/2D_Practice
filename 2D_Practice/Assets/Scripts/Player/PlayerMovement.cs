@@ -1,181 +1,218 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // New Input System (InputValue приходит из PlayerInput)
+using UnityEngine.InputSystem; // New Input System (PlayerInput, InputValue, InputAction)
 
-// Скрипт движения игрока + поддержка 2 источников ввода:
-// 1) Keyboard (New Input System через PlayerInput -> OnMove)
-// 2) Joystick Pack (Fixed/Floating/Dynamic Joystick -> joystick.Horizontal / joystick.Vertical)
-//
-// Цель: можно выбрать режим управления:
-// - Keyboard  : только клавиатура/геймпад из InputActions
-// - Joystick  : только экранный джойстик
-// - Auto      : если джойстик отклонён — используем его, иначе клавиатуру
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    // Какой источник управления использовать
     public enum ControlMode
     {
-        Keyboard,  // только New Input System (WASD/стик геймпада и т.д.)
-        Joystick,  // только экранный джойстик (Joystick Pack)
-        Auto       // автоматически: джойстик имеет приоритет, если его тронули
+        Keyboard,   // только New Input System (клава/геймпад)
+        Joystick,   // только экранный джойстик (Joystick Pack)
+        Auto        // если джойстик отклонён — он, иначе клавиатура
     }
 
-    [Header("Movement")]
-    [SerializeField] private float moveSpeed = 5f;           // скорость движения (настраивается в инспекторе)
-    [SerializeField] private ControlMode controlMode = ControlMode.Auto; // режим управления (можно менять в инспекторе)
+    [Header("Movement (базовое движение)")]
+    [SerializeField] private float moveSpeed = 5f;                 // базовая скорость
+    [SerializeField] private ControlMode controlMode = ControlMode.Auto;
 
-    [Header("References")]
-    [SerializeField] private Rigidbody2D rb;                 // Rigidbody2D игрока  найдём сами если нет
-    [SerializeField] private Animator animator;              // Animator (обычно на дочернем объекте Player_0)
+    [Header("Sprint / Acceleration (ускорение/спринт)")]
+    [SerializeField] private float sprintMultiplier = 1.7f;        // во сколько раз быстрее при спринте
+    [SerializeField] private bool sprintToggle = false;            // false = удержание, true = переключатель
+    [SerializeField] private float speedChangePerSecond = 25f;      // 0 = мгновенно, >0 = плавно
 
-    // Joystick Pack:
-    // В инспекторе нужно перетащить (FixedJoystick / FloatingJoystick / DynamicJoystick).
-    // Важно: тип поля "Joystick" — это базовый класс из Joystick Pack.
-    [Header("Joystick Pack (optional)")]
+    [Header("References (ссылки на компоненты)")]
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Animator animator;
+    [SerializeField] private PlayerInput playerInput;              // ✅ важно: чтобы читать Sprint.IsPressed()
+
+    [Header("Joystick Pack (экранный джойстик, опционально)")]
     [SerializeField] private Joystick joystick;
-    [SerializeField, Range(0f, 1f)] private float joystickDeadZone = 0.2f; // убирает дрожь у центра
-    [SerializeField] private bool joystickDigital = true; // true = всегда полный бег (как клавиши)
+    [SerializeField, Range(0f, 1f)] private float joystickDeadZone = 0.2f;
+    [SerializeField] private bool joystickDigital = true;
 
-    // ВНУТРЕННЕЕ СОСТОЯНИЕ СКРИПТА
+    // ====== ВНУТРЕННИЕ ПЕРЕМЕННЫЕ ======
 
-
-    // Ввод с клавиатуры / геймпада из New Input System (приходит в OnMove)
+    // Ввод движения из New Input System (WASD/стик геймпада)
     private Vector2 inputKeyboard;
 
-    // Последнее НЕнулевое направление движения.
-    // Нужно, чтобы в Idle персонаж "смотрел" в последнюю сторону, а не сбрасывался на (0,0).
+    // Последнее направление, чтобы персонаж "смотрел" в сторону последнего движения
     private Vector2 lastMoveDir = Vector2.down;
+
+    // Спринт для режима toggle (вкл/выкл)
+    private bool sprintActive = false;
+
+    // Удержание спринта от UI-кнопки (для мобилки)
+    private bool sprintUIHeld = false;
+
+    // Текущая скорость (для плавного разгона)
+    private float currentSpeed;
+
+    // ✅ Ссылка на action Sprint (чтобы читать IsPressed каждый кадр)
+    private InputAction sprintAction;
 
     private void Awake()
     {
-        // 1) Забираем Rigidbody2D, если не назначен вручную
-        if (rb == null)
-            rb = GetComponent<Rigidbody2D>();
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+        if (playerInput == null) playerInput = GetComponent<PlayerInput>();
+        if (animator == null) animator = GetComponentInChildren<Animator>();
 
-        // 2) Для top-down обычно гравитация не нужна
         rb.gravityScale = 0f;
-
-        // 3) Чтобы физика не крутила игрока при столкновениях со стенами
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        // 4) Забираем Animator, если не назначен вручную Он на Player_0 чаще всего
-        if (animator == null)
-            animator = GetComponentInChildren<Animator>();
+        currentSpeed = moveSpeed;
+
+        // Берём action Sprint по имени из InputActions.
+        // ВАЖНО: это не "событие", а "состояние кнопки", которое можно спросить в любой момент.
+        if (playerInput != null && playerInput.actions != null)
+        {
+            // throwIfNotFound = false -> если нет такого action, просто вернёт null
+            sprintAction = playerInput.actions.FindAction("Sprint", false);
+        }
     }
 
-    
-    // NEW INPUT SYSTEM: PlayerInput вызывает OnMove(...)
-       // Чтобы это работало:
-    // - На игроке должен быть компонент PlayerInput
-    // - Behavior: Send Messages
-    // - Action "Move" должна быть в InputActions
-    // - Название callback должно совпадать: OnMove
+    // ============================================================
+    // 1) ДВИЖЕНИЕ: вызывается PlayerInput (Send Messages) от action "Move"
+    // ============================================================
     public void OnMove(InputValue value)
     {
-        // Считываем Vector2: (x,y)
-        // x: влево(-1) / вправо(+1)
-        // y: вниз(-1) / вверх(+1)
         inputKeyboard = value.Get<Vector2>();
 
-        // Нормализация нужна, чтобы по диагонали не было быстрее:
-        // (1,1) по длине больше чем (1,0), поэтому скорость была бы выше.
+        // Чтобы по диагонали не было быстрее
         if (inputKeyboard.sqrMagnitude > 1f)
             inputKeyboard.Normalize();
     }
 
+    // ============================================================
+    // 2) СПРИНТ: событие нажатия (но отпускание может не приходить в Send Messages)
+    // Поэтому:
+    // - в режиме HOLD (sprintToggle=false) мы ИГНОРИРУЕМ OnSprint
+    //   и читаем состояние кнопки через sprintAction.IsPressed() в FixedUpdate
+    // - в режиме TOGGLE (sprintToggle=true) используем OnSprint как переключатель
+    // ============================================================
+    public void OnSprint(InputValue value)
+    {
+        // HOLD режим: состояние берём в FixedUpdate через IsPressed()
+        if (!sprintToggle) return;
+
+        // TOGGLE режим: нажал -> переключили
+        if (value.isPressed)
+            sprintActive = !sprintActive;
+    }
+
+    // ============================================================
+    // 3) СПРИНТ ДЛЯ МОБИЛКИ (UI-кнопка)
+    // PointerDown -> SetSprint(true)
+    // PointerUp   -> SetSprint(false)
+    // ============================================================
+    public void SetSprint(bool pressed)
+    {
+        if (!sprintToggle)
+        {
+            // HOLD режим: пока держим кнопку на экране — бежим
+            sprintUIHeld = pressed;
+        }
+        else
+        {
+            // TOGGLE режим: одно нажатие переключает
+            if (pressed) sprintActive = !sprintActive;
+        }
+    }
+
     private void FixedUpdate()
     {
-        // В физике (FixedUpdate) мы двигаем Rigidbody2D
-        // Здесь выбираем, какой ввод использовать: клавиатура/джойстик/авто
         Vector2 move = GetMoveInput();
 
-        // Движение:
-        // Линейная скорость = направление * скорость
-        rb.linearVelocity = move * moveSpeed;
+        // ============================================================
+        // ✅ ГЛАВНЫЙ ФИКС "залипания"
+        // ============================================================
+        // Если sprintToggle = false (удержание),
+        // мы каждый кадр спрашиваем: кнопка Sprint сейчас зажата или нет?
+        bool sprintNow;
 
-        // Обновляем параметры анимации (направление и скорость)
+        if (sprintToggle)
+        {
+            // toggle: состояние хранится в sprintActive
+            sprintNow = sprintActive;
+        }
+        else
+        {
+            // hold: UI-кнопка ИЛИ физическая кнопка из InputActions
+            bool inputHeld = (sprintAction != null && sprintAction.IsPressed());
+            sprintNow = sprintUIHeld || inputHeld;
+        }
+
+        // Целевая скорость
+        float targetSpeed = moveSpeed * (sprintNow ? sprintMultiplier : 1f);
+
+        // Плавно меняем скорость (или мгновенно, если speedChangePerSecond = 0)
+        if (speedChangePerSecond <= 0f)
+        {
+            currentSpeed = targetSpeed;
+        }
+        else
+        {
+            currentSpeed = Mathf.MoveTowards(
+                currentSpeed,
+                targetSpeed,
+                speedChangePerSecond * Time.fixedDeltaTime
+            );
+        }
+
+        // Двигаем Rigidbody2D
+        // ⚠️ Если Unity ругнётся на linearVelocity — замени на rb.velocity
+        rb.linearVelocity = move * currentSpeed;
+
         UpdateAnimator(move);
     }
 
-    
-    // ВЫБОР ИСТОЧНИКА УПРАВЛЕНИЯ
-   
     private Vector2 GetMoveInput()
     {
-        // 1) Получаем ввод с джойстика (если он назначен)
         Vector2 joy = Vector2.zero;
 
         if (joystick != null)
         {
             joy = new Vector2(joystick.Horizontal, joystick.Vertical);
 
-            // 1) DeadZone — гасим мелкий шум возле нуля
+            // deadzone — чтобы не дрожал
             if (joy.magnitude < joystickDeadZone)
-            {
                 joy = Vector2.zero;
-            }
             else
             {
-                // 2) Digital режим — делаем как WASD: длина всегда 1
-                // Нормализуем диагональ (на всякий)
                 if (joystickDigital)
-                    joy = joy.normalized;
+                    joy = joy.normalized; // как WASD — всегда полный ход
                 else if (joy.sqrMagnitude > 1f)
-                    joy.Normalize();
+                    joy.Normalize(); // на всякий случай
             }
-
-       
         }
 
-        // 2) Выбираем режим
         switch (controlMode)
         {
             case ControlMode.Keyboard:
-                // Только клавиатура/геймпад из New Input System
                 return inputKeyboard;
 
             case ControlMode.Joystick:
-                // Только экранный джойстик
                 return joy;
 
             case ControlMode.Auto:
             default:
-                // Авто: если джойстик реально отклонён — используем его,
-                // иначе используем клавиатуру.
-                // Порог 0.01f — чтобы игнорировать мелкий шум/дрожание джойстика.
                 return (joy != Vector2.zero) ? joy : inputKeyboard;
         }
     }
 
-    
-    // АНИМАЦИЯ (Blend Tree параметры)
-   
-    // Предполагается, что в Animator есть float параметры:
-    // "Horizontal", "Vertical", "Speed"
-    //
-    // Blend Tree:
-    // - 2D Simple Directional
-    // - X = Horizontal, Y = Vertical
-    // - RunRight (1,0), RunLeft (-1,0), RunUp (0,1), RunDown (0,-1)
     private void UpdateAnimator(Vector2 move)
     {
-        // Если Animator не найден — просто выходим (движение будет работать без анимаций)
         if (animator == null) return;
 
-        // Если игрок движется — обновляем lastMoveDir
         if (move.sqrMagnitude > 0.001f)
             lastMoveDir = move;
 
-        // Направление для Blend Tree берём из lastMoveDir,
-        // чтобы когда move = (0,0) (стоим), персонаж не "терял" ориентацию.
         animator.SetFloat("Horizontal", lastMoveDir.x);
         animator.SetFloat("Vertical", lastMoveDir.y);
 
-        // Speed используем для перехода Idle <-> Movement
-       
         float speedParam = (move.sqrMagnitude > 0.001f) ? 1f : 0f;
         animator.SetFloat("Speed", speedParam);
     }
+
     public void OnInteract(InputValue value)
     {
         if (!value.isPressed) return;
@@ -183,5 +220,4 @@ public class PlayerMovement : MonoBehaviour
         if (animator != null)
             animator.SetTrigger("Interact");
     }
-
 }

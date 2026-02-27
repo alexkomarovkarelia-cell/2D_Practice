@@ -14514,6 +14514,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 5
   controlMode: 2
+  sprintMultiplier: 1.7
+  sprintToggle: 0
+  speedChangePerSecond: 25
   rb: {fileID: 499791552}
   animator: {fileID: 1626185106}
   joystick: {fileID: 369491924}
