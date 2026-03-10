@@ -73,9 +73,26 @@ namespace Enemy
             // Если аниматор подключён — можно обновлять параметры
             if (animator != null)
             {
-                animator.SetFloat("Horizontal", dir.x);
-                animator.SetFloat("Vertical", dir.y);
-                animator.SetFloat("Speed", dir.magnitude);
+                // Для анимации берём не "плавное" направление,
+                // а определяем главную ось: либо горизонталь, либо вертикаль
+                Vector2 animDir = dir;
+
+                if (Mathf.Abs(animDir.x) > Mathf.Abs(animDir.y))
+                {
+                    // Движение больше по горизонтали
+                    animDir.x = Mathf.Sign(animDir.x);
+                    animDir.y = 0f;
+                }
+                else
+                {
+                    // Движение больше по вертикали
+                    animDir.y = Mathf.Sign(animDir.y);
+                    animDir.x = 0f;
+                }
+
+                animator.SetFloat("Horizontal", animDir.x);
+                animator.SetFloat("Vertical", animDir.y);
+                animator.SetFloat("Speed", dir.sqrMagnitude > 0.001f ? 1f : 0f);
             }
         }
 

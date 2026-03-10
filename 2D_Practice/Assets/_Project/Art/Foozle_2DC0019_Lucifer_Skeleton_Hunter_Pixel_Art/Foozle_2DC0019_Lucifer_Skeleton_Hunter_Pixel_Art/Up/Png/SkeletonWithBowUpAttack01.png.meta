@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: b2ff82cb1761eeb458b9dbd4e2525812
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4881492810551337584
+    second: SkeletonWithBowUpAttack01_0
+  - first:
+      213: 2477682196044717625
+    second: SkeletonWithBowUpAttack01_1
+  - first:
+      213: -7414073474543094452
+    second: SkeletonWithBowUpAttack01_2
+  - first:
+      213: -6690438984411036796
+    second: SkeletonWithBowUpAttack01_3
+  - first:
+      213: -8653661970488066276
+    second: SkeletonWithBowUpAttack01_4
+  - first:
+      213: 3493719461063224839
+    second: SkeletonWithBowUpAttack01_5
+  - first:
+      213: 2583783690014765009
+    second: SkeletonWithBowUpAttack01_6
+  - first:
+      213: 7065849413169498657
+    second: SkeletonWithBowUpAttack01_7
+  - first:
+      213: 8888958407794377505
+    second: SkeletonWithBowUpAttack01_8
+  - first:
+      213: 2495014292031467876
+    second: SkeletonWithBowUpAttack01_9
+  - first:
+      213: -197015432348585582
+    second: SkeletonWithBowUpAttack01_10
+  - first:
+      213: 4825171338151358665
+    second: SkeletonWithBowUpAttack01_11
+  - first:
+      213: -705763832855034437
+    second: SkeletonWithBowUpAttack01_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 6
+        width: 20
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09dd67de624714cb0800000000000000
+      internalID: -4881492810551337584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_1
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 3
+        width: 22
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93e1e8974de726220800000000000000
+      internalID: 2477682196044717625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_2
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 3
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c457633d47beb1990800000000000000
+      internalID: -7414073474543094452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_3
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 3
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48341cee039c623a0800000000000000
+      internalID: -6690438984411036796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_4
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 3
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1f70c2794408e780800000000000000
+      internalID: -8653661970488066276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_5
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 3
+        width: 22
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70eea8dd65f2c7030800000000000000
+      internalID: 3493719461063224839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_6
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 3
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1df27cb93917bd320800000000000000
+      internalID: 2583783690014765009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_7
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 3
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12ace54da90fe0260800000000000000
+      internalID: 7065849413169498657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_8
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 3
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1234ecf739ceb5b70800000000000000
+      internalID: 8888958407794377505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_9
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 36
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 461fe0a874210a220800000000000000
+      internalID: 2495014292031467876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_10
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 3
+        width: 22
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 291b793128f044df0800000000000000
+      internalID: -197015432348585582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_11
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 3
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c078e664c376f240800000000000000
+      internalID: 4825171338151358665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SkeletonWithBowUpAttack01_12
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 3
+        width: 22
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb58b57888f9436f0800000000000000
+      internalID: -705763832855034437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SkeletonWithBowUpAttack01_0: -4881492810551337584
+      SkeletonWithBowUpAttack01_1: 2477682196044717625
+      SkeletonWithBowUpAttack01_10: -197015432348585582
+      SkeletonWithBowUpAttack01_11: 4825171338151358665
+      SkeletonWithBowUpAttack01_12: -705763832855034437
+      SkeletonWithBowUpAttack01_2: -7414073474543094452
+      SkeletonWithBowUpAttack01_3: -6690438984411036796
+      SkeletonWithBowUpAttack01_4: -8653661970488066276
+      SkeletonWithBowUpAttack01_5: 3493719461063224839
+      SkeletonWithBowUpAttack01_6: 2583783690014765009
+      SkeletonWithBowUpAttack01_7: 7065849413169498657
+      SkeletonWithBowUpAttack01_8: 8888958407794377505
+      SkeletonWithBowUpAttack01_9: 2495014292031467876
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
