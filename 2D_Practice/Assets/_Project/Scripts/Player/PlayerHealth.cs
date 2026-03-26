@@ -2,29 +2,40 @@ using GameCore.Health;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerHealth: ObjectHealth
-
+public class PlayerHealth : ObjectHealth
 {
-    private WaitForSeconds _regenerationInterval = new WaitForSeconds(5f);
-    private float _regenerationValue = 1f;
+    [SerializeField] private float _regenerationDelay = 5f;
+    [SerializeField] private float _regenerationValue = 1f;
+
+    private Coroutine _regenerationCoroutine;
 
     private void Start()
     {
-        StartCoroutine(routine: Regeration());
+        _regenerationCoroutine = StartCoroutine(Regeneration());
     }
 
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        if (CurrentHealth <= 0)
-            Debug.Log("Игрок умер");
-    }
-    private IEnumerator Regeration ()
-    {
-        while(true)
+
+        if (CurrentHealth <= 0f)
         {
-            TakeHeal (_regenerationValue);
-            yield return _regenerationInterval;
+            Debug.Log("Игрок умер");
+
+            if (_regenerationCoroutine != null)
+            {
+                StopCoroutine(_regenerationCoroutine);
+                _regenerationCoroutine = null;
+            }
+        }
+    }
+
+    private IEnumerator Regeneration()
+    {
+        while (CurrentHealth > 0f)
+        {
+            yield return new WaitForSeconds(_regenerationDelay);
+            TakeHeal(_regenerationValue);
         }
     }
 }
