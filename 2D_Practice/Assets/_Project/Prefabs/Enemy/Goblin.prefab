@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6523382100753197960}
   - component: {fileID: 6129202414205205071}
   - component: {fileID: 7113574020516056439}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Goblin_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,9 @@ GameObject:
   - component: {fileID: 7757685875531959262}
   - component: {fileID: 6364822655119419565}
   - component: {fileID: 2700585277104304110}
-  m_Layer: 0
+  - component: {fileID: 2460974027965416713}
+  - component: {fileID: 2495946609132386536}
+  m_Layer: 7
   m_Name: Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +159,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7919141850327182420}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -223,10 +225,37 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.48, y: 0.48}
+  m_Size: {x: 0.8, y: 0.7}
   m_Direction: 0
+--- !u!114 &2460974027965416713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919141850327182420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c08de548c09d524cad2ca8054c4ff57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy.EnemyCollision
+  _damage: 5
+--- !u!114 &2495946609132386536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919141850327182420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22a9a0305a30aea45846b377a846eb91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy.EnemyHealth
+  _maxHealth: 15
+  _currentHealth: 0
