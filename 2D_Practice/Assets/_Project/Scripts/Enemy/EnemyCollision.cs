@@ -17,6 +17,8 @@ namespace Enemy
                 // Наносим игроку урон
                 player.TakeDamage(_damage);
 
+               // player.OnHealthChanged?.Invoke();
+
                 // Выключаем врага после столкновения
                 gameObject.SetActive(false);
             }
