@@ -50,6 +50,7 @@
   <Project Path="Unity.2D.Tilemap.Extras.Editor.csproj" />
   <Project Path="Unity.AI.Image.csproj" />
   <Project Path="Unity.TextMeshPro.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.2D.Enhancers.Editor.csproj" />
   <Project Path="Unity.TextMeshPro.Editor.csproj" />
   <Project Path="PsdPlugin.csproj" />
@@ -72,7 +73,6 @@
   <Project Path="Unity.2D.Sprite.Editor.csproj" />
   <Project Path="Unity.Multiplayer.Center.Common.csproj" />
   <Project Path="Unity.AI.Generators.UI.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.InputSystem.ForUI.csproj" />
   <Project Path="Zenject-ReflectionBaking-Editor.csproj" />
   <Project Path="Unity.Collections.CodeGen.csproj" />
